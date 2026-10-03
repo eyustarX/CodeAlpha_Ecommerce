@@ -23,3 +23,9 @@ Thumbs.db
 
 # Testing coverage
 coverage/
+
+# AI & IDE configuration folders
+.agents/
+.claude/
+.windsurf/
+skills-lock.json
