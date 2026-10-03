@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Details - CodeAlpha Store</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <a href="index.html" class="nav-brand">CodeAlpha Store</a>
+      <div class="nav-links">
+        <a href="index.html">Products</a>
+        <a href="cart.html"
+          >Cart <span id="cart-count" class="badge">0</span></a
+        >
+        <a href="login.html" id="auth-link">Login</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <div style="margin-bottom: 1.5rem">
+        <a
+          href="index.html"
+          style="color: var(--text-muted); text-decoration: none"
+          >&larr; Back to Catalog</a
+        >
+      </div>
+
+      <!-- Product Details Content -->
+      <div id="product-detail-container">
+        <p style="text-align: center">Loading product details...</p>
+      </div>
+    </main>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/productDetails.js"></script>
+  </body>
+</html>

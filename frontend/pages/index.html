@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeAlpha Store - Modern E-Commerce</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-brand">CodeAlpha Store</a>
+    <div class="nav-links">
+      <a href="index.html">Products</a>
+      <a href="cart.html">Cart <span id="cart-count" class="badge">0</span></a>
+      <a href="login.html" id="auth-link">Login</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container">
+    <!-- Search & Filter Controls -->
+    <section class="controls-bar">
+      <input 
+        type="text" 
+        id="search-input" 
+        class="search-input" 
+        placeholder="Search products by keyword..."
+      />
+      <select id="category-filter" class="filter-select">
+        <option value="">All Categories</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Accessories">Accessories</option>
+        <option value="Furniture">Furniture</option>
+      </select>
+    </section>
+
+    <!-- Product Grid -->
+    <section id="product-grid" class="product-grid">
+      <!-- Injected dynamically via products.js -->
+      <p style="grid-column: 1/-1; text-align: center;">Loading catalog...</p>
+    </section>
+
+    <!-- Pagination Controls -->
+    <div class="pagination">
+      <button id="prev-btn" class="btn" disabled>&larr; Previous</button>
+      <span id="page-indicator">Page 1 of 1</span>
+      <button id="next-btn" class="btn" disabled>Next &rarr;</button>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="../js/api.js"></script>
+  <script src="../js/products.js"></script>
+</body>
+</html>
