@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const productRoutes = require("./routes/productRoutes");
+const authRoutes = require("./routes/authRoutes");
 const { notFoundHandler, errorHandler } = require("./middleware/errorHandler");
 
 const app = express();
@@ -27,8 +28,10 @@ app.get("/api/v1", (req, res) => {
   });
 });
 
-// Product routes
+// Auth & Product routes
+app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/products", productRoutes);
+
 
 
 // 404 & Centralized Error Handlers (must be registered LAST)
