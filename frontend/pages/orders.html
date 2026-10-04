@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order History - Alpha Store</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .order-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .order-status {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .status-PENDING { background: #fef3c7; color: #b45309; }
+    .status-PROCESSING { background: #e0f2fe; color: #0369a1; }
+    .status-SHIPPED { background: #ede9fe; color: #6d28d9; }
+    .status-DELIVERED { background: #dcfce7; color: #15803d; }
+    .status-CANCELLED { background: #fee2e2; color: #b91c1c; }
+    
+    .order-item-mini {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="nav-brand">Alpha Store</a>
+    <div class="nav-links">
+      <a href="index.html">Products</a>
+      <a href="orders.html">My Orders</a>
+      <a href="cart.html">Cart <span id="cart-count" class="badge">0</span></a>
+      <span id="admin-link-container"></span>
+      <a href="login.html" id="auth-link">Login</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <h1 style="margin-bottom: 1.5rem;">Your Orders</h1>
+
+    <div id="orders-list">
+      <p style="text-align: center;">Loading your orders...</p>
+    </div>
+  </main>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/orders.js"></script>
+</body>
+</html>

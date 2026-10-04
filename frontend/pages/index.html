@@ -3,16 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CodeAlpha Store - Modern E-Commerce</title>
+  <title>Alpha Store - Modern E-Commerce</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
   <!-- Navigation Bar -->
   <nav class="navbar">
-    <a href="index.html" class="nav-brand">CodeAlpha Store</a>
+    <a href="index.html" class="nav-brand">Alpha Store</a>
     <div class="nav-links">
       <a href="index.html">Products</a>
+      <a href="orders.html">My Orders</a>
       <a href="cart.html">Cart <span id="cart-count" class="badge">0</span></a>
+      <span id="admin-link-container"></span>
       <a href="login.html" id="auth-link">Login</a>
     </div>
   </nav>
@@ -37,7 +39,6 @@
 
     <!-- Product Grid -->
     <section id="product-grid" class="product-grid">
-      <!-- Injected dynamically via products.js -->
       <p style="grid-column: 1/-1; text-align: center;">Loading catalog...</p>
     </section>
 

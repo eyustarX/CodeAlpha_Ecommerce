@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Alpha Store</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .admin-nav {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 0.5rem;
+    }
+    .tab-btn {
+      padding: 0.6rem 1.25rem;
+      background: none;
+      border: none;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      border-radius: var(--radius);
+    }
+    .tab-btn.active {
+      color: var(--primary);
+      background: #eff6ff;
+    }
+    .table-container {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow-x: auto;
+      box-shadow: var(--shadow);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    th, td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+    th {
+      background: #f8fafc;
+      font-weight: 600;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      padding: 1rem;
+    }
+    .modal-content {
+      background: var(--surface);
+      padding: 2rem;
+      border-radius: var(--radius);
+      max-width: 500px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="nav-brand">Alpha Store <span style="font-size: 0.8rem; background: #fef3c7; color: #b45309; padding: 0.2rem 0.6rem; border-radius: 999px;">Admin</span></a>
+    <div class="nav-links">
+      <a href="index.html">View Store</a>
+      <a href="orders.html">My Orders</a>
+      <span id="admin-link-container"></span>
+      <a href="login.html" id="auth-link">Login</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="admin-nav">
+      <button class="tab-btn active" onclick="switchTab('products')">Manage Products & Inventory</button>
+      <button class="tab-btn" onclick="switchTab('orders')">Manage All Orders</button>
+    </div>
+
+    <!-- Products Tab -->
+    <section id="tab-products">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h2>Product Catalog & Inventory</h2>
+        <button class="btn" onclick="openProductModal()">+ Add New Product</button>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-product-rows">
+            <tr><td colspan="6" style="text-align: center;">Loading products...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Orders Tab -->
+    <section id="tab-orders" style="display: none;">
+      <h2 style="margin-bottom: 1.5rem;">Customer Orders Lifecycle</h2>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Date</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Update Status</th>
+            </tr>
+          </thead>
+          <tbody id="admin-order-rows">
+            <tr><td colspan="6" style="text-align: center;">Loading orders...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Add/Edit Product Modal -->
+  <div id="product-modal" class="modal">
+    <div class="modal-content">
+      <h3 id="modal-title" style="margin-bottom: 1.5rem;">Add New Product</h3>
+      <form id="product-form">
+        <input type="hidden" id="prod-id">
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-weight: 600; margin-bottom: 0.3rem;">Name</label>
+          <input type="text" id="prod-name" required style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: var(--radius);">
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-weight: 600; margin-bottom: 0.3rem;">Description</label>
+          <textarea id="prod-desc" rows="3" required style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: var(--radius);"></textarea>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div>
+            <label style="display: block; font-weight: 600; margin-bottom: 0.3rem;">Price ($)</label>
+            <input type="number" step="0.01" id="prod-price" required style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: var(--radius);">
+          </div>
+          <div>
+            <label style="display: block; font-weight: 600; margin-bottom: 0.3rem;">Stock Count</label>
+            <input type="number" id="prod-stock" required style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: var(--radius);">
+          </div>
+        </div>
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-weight: 600; margin-bottom: 0.3rem;">Category</label>
+          <input type="text" id="prod-category" required placeholder="e.g. Electronics" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: var(--radius);">
+        </div>
+        <div style="margin-bottom: 1.5rem;">
+          <label style="display: block; font-weight: 600; margin-bottom: 0.3rem;">Image URL (Unsplash or direct link)</label>
+          <input type="url" id="prod-img" placeholder="https://..." style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: var(--radius);">
+        </div>
+        <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+          <button type="button" class="btn" style="background: var(--border); color: var(--text-main);" onclick="closeProductModal()">Cancel</button>
+          <button type="submit" class="btn">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/admin.js"></script>
+</body>
+</html>

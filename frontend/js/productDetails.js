@@ -1,13 +1,12 @@
-const container = document.getElementById("product-detail-container");
+const container = document.getElementById('product-detail-container');
 
 // Extract product ID from URL (?id=...)
 const urlParams = new URLSearchParams(window.location.search);
-const productId = urlParams.get("id");
+const productId = urlParams.get('id');
 
 async function loadProductDetail() {
   if (!productId) {
-    container.innerHTML =
-      '<p style="color: var(--danger); text-align: center;">No product ID provided in the URL.</p>';
+    container.innerHTML = '<p style="color: var(--danger); text-align: center;">No product ID provided in the URL.</p>';
     return;
   }
 
@@ -29,7 +28,7 @@ function renderDetail(product) {
   container.innerHTML = `
     <div class="product-detail-wrapper">
       <img 
-        src="${product.imageUrl || "https://via.placeholder.com/600x450?text=No+Image"}" 
+        src="${product.imageUrl || 'https://via.placeholder.com/600x450?text=No+Image'}" 
         alt="${product.name}" 
         class="detail-img"
       />
@@ -49,15 +48,15 @@ function renderDetail(product) {
             max="${product.stock}" 
             value="1" 
             style="width: 70px; padding: 0.5rem; border: 1px solid var(--border); border-radius: var(--radius);" 
-            ${!isAvailable ? "disabled" : ""}
+            ${!isAvailable ? 'disabled' : ''}
           />
           <button 
             id="add-to-cart-btn" 
             class="btn" 
             style="flex: 1;" 
-            ${!isAvailable ? "disabled" : ""}
+            ${!isAvailable ? 'disabled' : ''}
           >
-            ${isAvailable ? "Add to Cart" : "Out of Stock"}
+            ${isAvailable ? 'Add to Cart' : 'Out of Stock'}
           </button>
         </div>
       </div>
@@ -65,13 +64,35 @@ function renderDetail(product) {
   `;
 
   if (isAvailable) {
-    document.getElementById("add-to-cart-btn").addEventListener("click", () => {
-      const qty = parseInt(document.getElementById("quantity").value, 10) || 1;
-      alert(
-        `Added ${qty} item(s) to cart! (We will wire this to the backend in Phase 9)`,
-      );
+    const addBtn = document.getElementById('add-to-cart-btn');
+    addBtn.addEventListener('click', async () => {
+      if (!auth.isAuthenticated()) {
+        alert('Please log in to add items to your cart.');
+        window.location.href = 'login.html';
+        return;
+      }
+
+      const qty = parseInt(document.getElementById('quantity').value, 10) || 1;
+
+      try {
+        addBtn.disabled = true;
+        addBtn.textContent = 'Adding...';
+
+        await api.post('/cart/items', {
+          productId: product.id,
+          quantity: qty,
+        });
+
+        alert(`Added ${qty} item(s) to your cart!`);
+        updateCartBadge();
+      } catch (err) {
+        alert(`Error: ${err.message}`);
+      } finally {
+        addBtn.disabled = false;
+        addBtn.textContent = 'Add to Cart';
+      }
     });
   }
 }
 
-document.addEventListener("DOMContentLoaded", loadProductDetail);
+document.addEventListener('DOMContentLoaded', loadProductDetail);

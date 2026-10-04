@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - Alpha Store</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .checkout-layout {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    .checkout-form-card, .order-review-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      box-shadow: var(--shadow);
+    }
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+    }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-family: inherit;
+    }
+    .review-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="nav-brand">Alpha Store</a>
+    <div class="nav-links">
+      <a href="index.html">Products</a>
+      <a href="orders.html">My Orders</a>
+      <a href="cart.html">Cart <span id="cart-count" class="badge">0</span></a>
+      <span id="admin-link-container"></span>
+      <a href="login.html" id="auth-link">Login</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <h1 style="margin-bottom: 1.5rem;">Checkout & Place Order</h1>
+
+    <div class="checkout-layout">
+      <!-- Shipping Form -->
+      <div class="checkout-form-card">
+        <h2 style="font-size: 1.25rem; margin-bottom: 1.25rem;">1. Shipping Information</h2>
+        
+        <form id="checkout-form">
+          <div class="form-group">
+            <label for="shipping-address">Delivery Street Address & City</label>
+            <textarea 
+              id="shipping-address" 
+              rows="3" 
+              required 
+              placeholder="e.g. 123 Innovation Way, Apt 4B, New York, NY 10001"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Contact Phone Number</label>
+            <input type="tel" id="phone" required placeholder="+1 (555) 000-1234">
+          </div>
+
+          <div style="background: #f1f5f9; padding: 1rem; border-radius: var(--radius); margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--text-muted);">
+            💳 <strong>Payment Method:</strong> Cash on Delivery / Direct Invoice (Mock Processing enabled). Your transaction will be completed atomically.
+          </div>
+
+          <button type="submit" id="submit-order-btn" class="btn" style="width: 100%; padding: 0.9rem; font-size: 1.05rem;">
+            Place Order Now
+          </button>
+        </form>
+      </div>
+
+      <!-- Order Review -->
+      <div class="order-review-card">
+        <h2 style="font-size: 1.25rem; margin-bottom: 1.25rem;">2. Order Summary</h2>
+        <div id="checkout-items-preview">
+          <p>Loading items...</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/checkout.js"></script>
+</body>
+</html>
