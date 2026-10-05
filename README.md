@@ -151,11 +151,3 @@ npm test
 ```
 Result: **8/8 Passing Suites** (Verifying health, pagination, registration uniqueness, password authentication, JWT validation, 401 unauthorized protection, and 403 admin RBAC guards).
 
----
-
-## 💼 Resume & Portfolio Talking Points
-
-- **Atomic Checkout Transactions**: Implemented interactive PostgreSQL transactions via Prisma ORM guaranteeing ACID compliance during checkout—atomically validating inventory, snapshotting unit prices, decrementing stock, and clearing the cart to prevent phantom orders.
-- **RESTful API & Relational Database Design**: Designed a normalized 5-table schema with foreign key constraints, cascading deletions, and indexing in PostgreSQL.
-- **Security & RBAC**: Built authentication using salted bcrypt password hashing and stateless JWT tokens, complemented by role-based access control protecting administrative product and order management.
-- **Automated Integration Testing**: Authored automated end-to-end integration tests using Jest and Supertest to validate critical business paths and authorization barriers.
